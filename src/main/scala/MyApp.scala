@@ -1,5 +1,6 @@
 import zio._
-import zio.Console._
+import zio.http._
+import zio.stream._
 
 object MyApp extends ZIOAppDefault {
   def run = copyFileContent
