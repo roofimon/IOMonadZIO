@@ -1,0 +1,49 @@
+# SBT
+target/
+project/target/
+project/project/
+.idea/
+*.iml
+
+# Eclipse
+.metadata
+.tmp/
+bin/
+tmp/
+*.bak
+*.swp
+
+# Intellij IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# sbt-specific
+.history
+.cache
+.lib/
+
+# SBT 0.12.4 or older
+dist/
+
+# Scala worksheets
+.worksheet/
+
+# Logs
+logs/
+*.log
+
+# Scala/Java generated
+*.class
+*.log
+
+# Other IDEs and editors
+*.swp
