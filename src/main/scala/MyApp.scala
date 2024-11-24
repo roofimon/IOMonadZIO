@@ -2,11 +2,15 @@ import zio._
 import zio.Console._
 
 object MyApp extends ZIOAppDefault {
-  def run = myAppLogic
+  def run = copyFileContent
 
-  val myAppLogic: ZIO[Any, Throwable, Unit] =
+  val copyFileContent: ZIO[Any, Throwable, Unit] =
+    import FileOperations._
     for {
-      lines <- FileOperations.readLines("example.txt")
-      _ <- Console.printLine(lines.mkString("\n"))
+      lines: List[String] <- readLines("source.txt")
+      filteredLines: List[String] <- filterLinesWithKeyword(lines, "ZIO")
+      _ <- writeFile("sync.txt", filteredLines)
+      _ <- Console.printLine(filteredLines.mkString("\n"))
+      _ <- Console.printLine("Data written to file successfully.")
     } yield ()
 }

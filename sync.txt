@@ -1,0 +1,3 @@
+It contains several lines of text ZIO.
+The ZIO library is powerful and flexible.
+Reading files with ZIO is fun and easy!

@@ -1,5 +1,5 @@
 Hello, world!
 This is an example file.
-It contains several lines of text.
+It contains several lines of text ZIO.
 The ZIO library is powerful and flexible.
 Reading files with ZIO is fun and easy!
