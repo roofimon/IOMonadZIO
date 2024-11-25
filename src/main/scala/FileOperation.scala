@@ -17,7 +17,7 @@ object FileOperations {
     readFile(filePath).runCollect.map(_.toList)
   }
 
-  def filterLinesWithKeyword(
+  def filterItemsWithKeyword(
       lines: List[String],
       keyword: String
   ): ZIO[Any, Throwable, List[String]] = {

@@ -3,7 +3,7 @@ import zio.http._
 import scala.xml._
 
 object RSSFeedOperations {
-  def fetchAllItems(
+  def fetchItemsFromMultipleSources(
       feedUrls: List[String]
   ): ZIO[Client, Throwable, List[String]] = {
     ZIO
