@@ -3,9 +3,21 @@ import zio.http._
 import scala.xml._
 
 object RSSFeedOperations {
-  val feedUrl = "https://feeds.bbci.co.uk/news/rss.xml"
+  def fetchAllItems(
+      feedUrls: List[String]
+  ): ZIO[Client, Throwable, List[String]] = {
+    ZIO
+      .foreachPar(feedUrls)(feedUrl => // Use ZIO.foreachPar
+        for {
+          data <- fetchData(feedUrl)
+          xml <- stringToXml(data)
+          items <- extractItems(xml)
+        } yield items
+      )
+      .map(_.flatten)
+  }
 
-  def fetchData: ZIO[Client, Throwable, String] =
+  def fetchData(feedUrl: String): ZIO[Client, Throwable, String] =
     ZIO.service[Client].flatMap { client =>
       client
         .batched(Request.get(feedUrl))
@@ -23,5 +35,4 @@ object RSSFeedOperations {
     ZIO.attempt {
       (xml \\ "item" \\ "title").map(_.text).toList
     }
-
 }
