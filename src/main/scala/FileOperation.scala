@@ -21,7 +21,7 @@ object FileOperations {
       lines: List[String],
       keyword: String
   ): ZIO[Any, Throwable, List[String]] = {
-    ZIO.attempt { lines.filter(_.contains(keyword)) }
+    ZIO.attempt { lines.filter(_.toLowerCase.contains(keyword)) }
   }
 
   def writeFile(

@@ -1,17 +1,20 @@
 import zio._
 import zio.http._
-import zio.stream._
+import scala.xml._
 
-object MyApp extends ZIOAppDefault {
-  def run = copyFileContent
+object RssFeedProcessor extends ZIOAppDefault {
 
-  val copyFileContent: ZIO[Any, Throwable, Unit] =
-    import FileOperations._
-    for {
-      lines: List[String] <- readLines("source.txt")
-      filteredLines: List[String] <- filterLinesWithKeyword(lines, "ZIO")
-      _ <- writeFile("sync.txt", filteredLines)
-      _ <- Console.printLine(filteredLines.mkString("\n"))
-      _ <- Console.printLine("Data written to file successfully.")
-    } yield ()
+  import RSSFeedOperations._
+  import FileOperations._
+
+  val program = for {
+    data <- fetchData
+    xml <- stringToXml(data)
+    items <- extractItems(xml)
+    filteredItems <- filterLinesWithKeyword(items, "ukraine")
+    _ <- writeFile("sync.txt", filteredItems)
+    _ <- Console.printLine(filteredItems.mkString("\n"))
+  } yield ()
+
+  override val run = program.provide(Client.default)
 }
